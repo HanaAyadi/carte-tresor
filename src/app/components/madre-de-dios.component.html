@@ -1,0 +1,113 @@
+<div class="m-4">
+  <p-splitter
+    [style]="{ height: '600px' }"
+    [panelSizes]="[30, 70]"
+    [minSizes]="[10, 0]"
+    styleClass="mb-5"
+  >
+    <ng-template pTemplate>
+      <div class="flex flex-column gap-2 m-3">
+        <label htmlFor="dimension">Veuillez saisir les informations</label>
+
+        <textarea
+          rows="50"
+          cols="30"
+          pInputTextarea
+          [formControl]="data"
+          data-cy="inputData"
+        ></textarea>
+        <div class="flex gap-2">
+          <p-button
+            label="valider"
+            (onClick)="getData()"
+            data-cy="playBtn"
+          ></p-button>
+          <p-button
+            label="Recommencer"
+            severity="danger"
+            (onClick)="restart()"
+            data-cy="restartBtn"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate>
+      <p-splitter layout="vertical" [panelSizes]="[15, 85]">
+        <ng-template pTemplate>
+          <div
+            style="flex-grow: 1"
+            class="flex align-items-center justify-content-center"
+          >
+            <h1 data-cy="title">La Madre de Dios</h1>
+          </div>
+        </ng-template>
+        <ng-template pTemplate>
+          <p-splitter [panelSizes]="[50, 50]">
+            <ng-template pTemplate>
+              <div class="ml-3">
+                <h2>Départ</h2>
+                <div class="flex flex-column gap-2 m-2">
+                  <div *ngFor="let item of informations">* {{ item }}</div>
+                </div>
+
+                <div
+                  *ngFor="
+                    let item of getCardWithPlayer(
+                      card,
+                      InitialPlayerPositionX,
+                      InitialPlayerPositionY
+                    );
+                    let i = index
+                  "
+                  class="flex"
+                >
+                  <div
+                    *ngFor="let position of item; let j = index"
+                    [attr.data-cy]="'depart-' + i + '-' + j"
+                    class="column align-items-center justify-content-center"
+                  >
+                    {{ position }} --{{ i }}{{ j }}
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate>
+              <div class="ml-3">
+                <h2>Arrivée</h2>
+                <div class="flex flex-column gap-2 ml-2">
+                  <div
+                    *ngFor="
+                      let item of getFinalInformation(resultCard);
+                      let i = index
+                    "
+                  >
+                    * {{ item }}
+                  </div>
+                </div>
+
+                <div
+                  *ngFor="
+                    let item of getCardWithPlayer(
+                      resultCard,
+                      playerPositionX,
+                      playerPositionY
+                    )
+                  "
+                  class="flex"
+                >
+                  <div
+                    *ngFor="let i of item; let j = index"
+                    [attr.data-cy]="'arrivee-' + i + '-' + j"
+                    class="column align-items-center justify-content-center"
+                  >
+                    {{ i }}
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-splitter>
+        </ng-template>
+      </p-splitter>
+    </ng-template>
+  </p-splitter>
+</div>
